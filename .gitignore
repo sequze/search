@@ -197,3 +197,4 @@ cython_debug/
 temp.py
 script.py
 requests.txt
+.vscode
