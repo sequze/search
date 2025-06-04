@@ -6,7 +6,7 @@ load_dotenv()
 
 postgres_url = os.getenv("postgres_url")
 mysql_url = os.getenv("mysql_url")
-mongo_url = os.getenv("mongodb_url")
+mongo_url = os.getenv("mongo_url")
 
 
 class RunConfig(BaseModel):

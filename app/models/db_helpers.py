@@ -1,11 +1,15 @@
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
-from app.config import DatabaseConfig
-from app.config import settings
+from sqlalchemy.ext.asyncio import (
+    create_async_engine,
+    async_sessionmaker,
+    AsyncSession
+)
+from sqlalchemy import select
+from config import DatabaseConfig
+from config import settings
 from motor.motor_asyncio import AsyncIOMotorClient
 from beanie import Document, init_beanie
 from .request import Request
 
-# postgres_config, mongodb_config, mysql_config
 
 class DatabaseHelper:
     def __init__(self, config: DatabaseConfig):
@@ -31,6 +35,8 @@ class DatabaseHelper:
             yield session
 
 
+# MongoDb
+
 class RequestMongoModel(Document):
     name: str
 
@@ -43,7 +49,10 @@ class MongoDbHelper:
         self.client = AsyncIOMotorClient(config)
 
     async def init_db(self):
-        await init_beanie(self.client["search"], document_models=[RequestMongoModel])
+        await init_beanie(
+            self.client["search"],
+            document_models=[RequestMongoModel]
+            )
 
     async def search(request: str):
         pass
@@ -51,10 +60,12 @@ class MongoDbHelper:
     async def add_request(self, request: Request):
         req = RequestMongoModel(name=request.name)
         await req.save()
+
     async def dispose(self):
         await self.client.close()
 
 
+# General Database class
 class DatabaseWorker:
     def __init__(
         self, postgres: DatabaseConfig,
@@ -70,8 +81,6 @@ class DatabaseWorker:
         await self.mysql.dispose()
         await self.mongodb.dispose()
 
-    async def search(self):
-        pass
 
     async def init(self):
         await self.mongodb.init_db()

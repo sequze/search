@@ -5,7 +5,7 @@ from sqlalchemy.orm import (
     mapped_column
 )
 from sqlalchemy import MetaData
-from app.config import settings
+from config import settings
 
 
 class Base(DeclarativeBase):

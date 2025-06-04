@@ -21,7 +21,7 @@ app = FastAPI(lifespan=lifespan)
 
 if __name__ == "__main__":
     uvicorn.run(
-        "main:app", 
+        "main:app",
         host=RunConfig.host,
         port=RunConfig.port,
         reload=True)
