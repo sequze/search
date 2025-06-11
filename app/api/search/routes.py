@@ -1,12 +1,12 @@
 from fastapi import APIRouter
 from sqlalchemy.ext.asyncio import AsyncSession
 from models import db_helper
-from search import search
+from core.search import search
 from fastapi import Depends
 
 router = APIRouter()
 
-@router.get("/search")
+@router.get("/request")
 async def index(request: str,
           postgres: AsyncSession = Depends(db_helper.postgres.session_getter),
           mysql: AsyncSession = Depends(db_helper.mysql.session_getter),

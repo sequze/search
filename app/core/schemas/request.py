@@ -5,5 +5,5 @@ class RequestBase(BaseModel):
     name: str
 
 
-class RequestRead(BaseModel):
+class RequestRead(RequestBase):
     id: int
