@@ -8,5 +8,5 @@ from sqlalchemy.orm import sessionmaker
 from .base import Base
 
 
-class User(Base, SQLAlchemyBaseUserTable(int)):
+class User(Base, SQLAlchemyBaseUserTable[int]):
     pass
