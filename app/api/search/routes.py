@@ -4,7 +4,7 @@ from models import db_helper
 from core.search import search
 from fastapi import Depends
 
-router = APIRouter()
+router = APIRouter(tags=["Search"])
 
 @router.get("/request")
 async def index(request: str,
