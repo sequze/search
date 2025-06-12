@@ -12,8 +12,8 @@ mongo_url = os.getenv("mongo_url")
 
 
 class AuthConfig(BaseModel):
-    private_key_path: Path = BASE_DIR / "app" / "private.key"
-    public_key_path:  Path = BASE_DIR / "app" / "public.key"
+    private_key_path: Path = BASE_DIR  / "keys" / "private.key"
+    public_key_path:  Path = BASE_DIR  / "keys" / "public.key"
 
 
 class RunConfig(BaseModel):
