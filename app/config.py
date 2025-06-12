@@ -1,12 +1,19 @@
+from pathlib import Path
 from pydantic import BaseModel
 import os
 from dotenv import load_dotenv
 
+BASE_DIR = Path(__file__).parent
 load_dotenv()
 
 postgres_url = os.getenv("postgres_url")
 mysql_url = os.getenv("mysql_url")
 mongo_url = os.getenv("mongo_url")
+
+
+class AuthConfig(BaseModel):
+    private_key_path: Path = BASE_DIR  / "keys" / "private.key"
+    public_key_path:  Path = BASE_DIR  / "keys" / "public.key"
 
 
 class RunConfig(BaseModel):
@@ -32,6 +39,7 @@ class Settings:
 
     postgres_config = DatabaseConfig(url=postgres_url)
     mysql_config = DatabaseConfig(url=mysql_url)
+    auth_config = AuthConfig()
     mongodb_config = mongo_url
     run = RunConfig()
 

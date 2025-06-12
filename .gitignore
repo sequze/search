@@ -198,3 +198,7 @@ temp.py
 script.py
 requests.txt
 .vscode
+
+
+#jwt keys
+keys/
