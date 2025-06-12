@@ -9,7 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 
 async def get_user_db(session: AsyncSession = Depends(db_helper.postgres.session_getter)):
-    return SQLAlchemyUserDatabase(session, User)
+    yield SQLAlchemyUserDatabase(session, User)
 
 
 async def get_user_manager(user_db=Depends(get_user_db)):
