@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import List, Sequence
 from pydantic import BaseModel
 import os
 from dotenv import load_dotenv
@@ -10,6 +11,13 @@ postgres_url = os.getenv("postgres_url")
 mysql_url = os.getenv("mysql_url")
 mongo_url = os.getenv("mongo_url")
 
+class CorsConfig(BaseModel):
+    origins: Sequence[str] = [
+        "http://localhost.tiangolo.com",
+        "https://localhost.tiangolo.com",
+        "http://localhost",
+        "http://localhost:5173",
+    ]
 
 class AuthConfig(BaseModel):
     private_key_path: Path = BASE_DIR  / "keys" / "private.key"
@@ -42,6 +50,7 @@ class Settings:
     auth_config = AuthConfig()
     mongodb_config = mongo_url
     run = RunConfig()
+    cors_config = CorsConfig()
 
 
 settings = Settings()

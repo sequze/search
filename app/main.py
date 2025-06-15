@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-from config import RunConfig
+from fastapi.middleware.cors import CORSMiddleware
+from config import settings
 import uvicorn
 from models import db_helper
 from contextlib import asynccontextmanager
@@ -19,10 +20,17 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 app.include_router(api_router)
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.cors_config.origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 if __name__ == "__main__":
     uvicorn.run(
         "main:app",
-        host=RunConfig.host,
-        port=RunConfig.port,
+        host=settings.run.host,
+        port=settings.run.port,
         reload=True)
