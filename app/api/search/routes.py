@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from sqlalchemy.ext.asyncio import AsyncSession
 from models import db_helper, User
 from core.search import search
+from core.schemas import SearchRequest
 from core.auth.helpers import current_verified_user
 from fastapi import Depends
 
@@ -15,7 +16,7 @@ async def index(
     current_user: User = Depends(current_verified_user),
     postgres: AsyncSession = Depends(db_helper.postgres.session_getter),
     mysql: AsyncSession = Depends(db_helper.mysql.session_getter),
-):
+) -> SearchRequest:
     return await search(
         page=page,
         size=size,
