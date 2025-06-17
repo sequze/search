@@ -1,4 +1,21 @@
 services:
+  backend:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app
+    depends_on:
+      - mongo
+      - pg
+      - mysql
+    env_file:
+    - /.env
+
+
   pg:
     image: postgres
     environment:
@@ -11,7 +28,8 @@ services:
       - pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-  
+
+
   mongo:
     image: mongo
     environment:
@@ -19,6 +37,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
     ports:
       - "6017:27017"
+
 
   mysql:
     image: mysql
