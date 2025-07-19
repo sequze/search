@@ -4,14 +4,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 import re
 
-# import asyncio
-
-# async def search_postgres():
-#     await db_helper.init()
-#     async with db_helper.postgres.session_maker() as session:
-#         async with db_helper.mysql.session_maker() as mysql_session:
-#             await search("Как", limit=5, postgres_session=session, mysql_session=mysql_session)
-
 
 async def search(
     request: str,
@@ -48,9 +40,3 @@ async def search(
         ]
     )
     return result
-
-
-# def main():
-#     asyncio.run(search_postgres())
-
-# main()
