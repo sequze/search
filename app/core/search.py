@@ -5,14 +5,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 import re
 
-# import asyncio
-
-# async def search_postgres():
-#     await db_helper.init()
-#     async with db_helper.postgres.session_maker() as session:
-#         async with db_helper.mysql.session_maker() as mysql_session:
-#             await search("Как", limit=5, postgres_session=session, mysql_session=mysql_session)
-
 
 async def search(
     page: int,
@@ -51,3 +43,32 @@ async def search(
 #     asyncio.run(search_postgres())
 
 # main()
+=======
+    result.append(
+        [i.name.strip() for i in (
+                await postgres_session.scalars(
+                    select(Request)
+                    .where(Request.name.like(f"%{request}%"))
+                    .limit(limit)
+                )).all()
+        ]
+    )
+    result.append(
+        [i.name.strip() for i in (
+                await mysql_session.scalars(
+                    select(Request)
+                    .where(Request.name.like(f"%{request}%"))
+                    .limit(limit)
+                )).all()
+        ]
+    )
+    result.append(
+        [
+            i.name.strip()
+            for i in await RequestMongoModel.find({"name": {"$regex": regex}})
+            .limit(limit)
+            .to_list()
+        ]
+    )
+    return result
+
